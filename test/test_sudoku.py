@@ -117,6 +117,29 @@ IMPOSSIBLE = [
 ]
 
 
+EASY_16x16 = [
+    [None, 3,    None, 13,     5,    None, None, 2,      4,    None, None, 12,     10,   None, 1,    None],
+    [None, None, 10,   9,      None, 7,    13,   None,   None, 1,    11,   None,   14,   12,   None, None],
+    [2,    None, None, None,   None, 12,   None, 1,      14,   None, 8,    None,   None, None, None, 11  ],
+    [12,   1,    6,    7,      4,    None, 14,   9,      16,   3,    None, 10,     8,    2,    5,    13  ],
+
+    [None, 12,   None, 2,      None, 8,    None, None,   None, None, 3,    None,   6,    None, 10,   None],
+    [None, 5,    15,   None,   7,    2,    None, None,   None, None, 6,    9,      None, 8,    3,    None],
+    [10,   None, 9,    None,   None, 6,    4,    3,      15,   8,    16,   None,   None, 7,    None, 12  ],
+    [None, None, 3,    8,      13,   None, None, 10,     1,    None, None, 7,      5,    16,   None, None],
+
+    [None, None, 12,   5,      None, 3,    6,    None,   None, 4,    7,    None,   9,    14,   None, None],
+    [None, None, 13,   None,   16,   14,   None, None,   None, None, 12,   1,      None, 11,   None, None],
+    [9,    6,    1,    None,   15,   None, None, 12,     8,    None, None, 14,     None, 10,   7,    3   ],
+    [None, 7,    14,   None,   None, 1,    None, 4,      6,    None, 13,   None,   None, 5,    16,   None],
+
+    [7,    None, 16,   None,   None, 10,   None, None,   None, None, 4,    None,   None, 13,   None, 8   ],
+    [1,    13,   None, 11,     None, None, 15,   None,   None, 2,    None, None,   16,   None, 9,    10  ],
+    [15,   None, 2,    None,   None, 4,    None, 7,      3,    None, 10,   None,   None, 6,    None, 5   ],
+    [None, 10,   8,    None,   2,    9,    3,    None,   None, 16,   1,    11,     None, 4,    15,   None],
+]
+
+
 
 class TestSudoku(unittest.TestCase):
 
@@ -129,6 +152,7 @@ class TestSudoku(unittest.TestCase):
         self.correct = Sudoku(CORRECT)
         self.incorrect = Sudoku(INCORRECT)
         self.impossible = Sudoku(IMPOSSIBLE)
+        self.easy_16x16 = Sudoku(EASY_16x16)
 
     # __init__
     # TODO
@@ -207,3 +231,7 @@ class TestSudoku(unittest.TestCase):
 
     def test_solve_impossible(self):
         self.assertIsNone(sudoku.solve(self.impossible))
+
+    def test_solve_easy_16x16(self):
+        solved = sudoku.solve(self.easy_16x16)
+        self.assertTrue(solved.correct())

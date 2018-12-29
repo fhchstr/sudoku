@@ -83,7 +83,6 @@ class Sudoku(object):
         return p
 
     def __str__(self):
-        lines = []
         # Find the largest width of the values's string representation
         value_width = max([len(str(v)) for v in self.valid_values()])
         # Space between the square border and the values (1 on each side) -----------------+
@@ -96,6 +95,10 @@ class Sudoku(object):
         # Between each square, the dash is replaced by a plus sign ('+')
         # The number of squares on a row is the same as the number of values in a square
         horizontal_line = '+' + '+'.join(['-' * square_width] * self.values_per_square) + '+'
+        # Right alligned with fixed width
+        fmt = '{:>' + str(value_width) + '}'
+
+        lines = []
         for row_index, row in enumerate(self.board):
             if row_index % self.values_per_square == 0:
                 lines.append(horizontal_line)
@@ -104,7 +107,7 @@ class Sudoku(object):
             for column_index, cell in enumerate(row):
                 if column_index % self.values_per_square == 0:
                     values.append('|')
-                values.append(str(cell) if cell else ' ')
+                values.append(fmt.format(cell) if cell else ' ' * value_width)
 
             values.append('|')
             lines.append(' '.join(values))
