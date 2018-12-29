@@ -1,5 +1,6 @@
 import math
 
+
 class Sudoku(object):
 
     def __init__(self, board):
@@ -20,7 +21,7 @@ class Sudoku(object):
                 value = board[row][column]
                 if value:
                     if value not in self.valid_values():
-                        raise ValueError('{} is not a valid value'.format(value))
+                        raise MalformedBoard('{} is not a valid value'.format(value))
                     self.unmodifiable_cells.add((row, column))
                 self.board[row][column] = value
 
@@ -63,8 +64,8 @@ class Sudoku(object):
         left_column = column // self.values_per_square * self.values_per_square
 
         for row_in_square in xrange(top_row, top_row + self.values_per_square):
-             for column_in_square in xrange(left_column, left_column + self.values_per_square):
-                 yield row_in_square, column_in_square
+            for column_in_square in xrange(left_column, left_column + self.values_per_square):
+                yield row_in_square, column_in_square
 
     def possibilities(self, row, column):
         """Return the valid possibilities for a given coordinate."""
@@ -96,7 +97,7 @@ class Sudoku(object):
         # The number of squares on a row is the same as the number of values in a square
         horizontal_line = '+' + '+'.join(['-' * square_width] * self.values_per_square) + '+'
         # Right alligned with fixed width
-        fmt = '{:>' + str(value_width) + '}'
+        fmt = '{:>%d}' % value_width
 
         lines = []
         for row_index, row in enumerate(self.board):
@@ -129,7 +130,7 @@ def solve(sudoku):
         # Compute the next coordinate
         next_row, next_column = row, column
         if column < sudoku.board_size - 1:
-            next_column +=  1
+            next_column += 1
         elif row < sudoku.board_size - 1:
             next_row += 1
             next_column = 0
@@ -154,10 +155,4 @@ def solve(sudoku):
 
 
 class MalformedBoard(Exception):
-    pass
-
-class UnmodifiableCell(Exception):
-    pass
-
-class InvalidCell(Exception):
     pass
